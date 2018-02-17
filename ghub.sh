@@ -3,5 +3,5 @@ git add -A
 echo "Files Added"
 git commit -m "$1"
 echo "Files committed with $1"
-git push
+git push origin master
 echo "Class Repo Updated"
