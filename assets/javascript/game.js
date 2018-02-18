@@ -65,10 +65,10 @@ var game = {
     this.correctLetterCount = 0;
     for (var i = 0; i < this.wordToGuess.length; i++) {
       if (this.lettersGuessed.indexOf(this.wordToGuess[i]) > -1) {
-        this.wordToDisplay += this.wordToGuess[i] + " ";
+        this.wordToDisplay += this.wordToGuess[i] + "  ";
         this.correctLetterCount++;
       } else {
-        this.wordToDisplay += "_ ";
+        this.wordToDisplay += "_  ";
       }
     }
     wordId.textContent = this.wordToDisplay;
@@ -88,7 +88,6 @@ var game = {
     return (this.alphabet.indexOf(this.keyPressed.toLowerCase()) > -1);
   },
   reset: function () {
-    this.guessesRemaining = this.defaultGuesses;
     if (this.gameState == "won") {
       // Won
       this.wins++;
@@ -109,6 +108,8 @@ var game = {
     winsId.textContent = this.wins;
     lossesId.textContent = this.losses;
     this.gameState = "start";
+    this.guessesRemaining = this.defaultGuesses;
+
   },
   showStats: function () {
     console.log("correctLetterCount " + this.correctLetterCount);
