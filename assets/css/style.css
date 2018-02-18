@@ -2,11 +2,11 @@ body {
   color: tan;
 
   /* The image used */
-  background-image: url("./../images/stone-wall.jpg");
+  background-image: url("./../images/hand.jpg");
   background-color: rgba(20, 20, 30, 0.5);
   /* Center and scale the image nicely */
   background-position: center;
-  background-repeat: round;
+  background-repeat: no-repeat;
   background-size: cover;
 
   /* google font */
