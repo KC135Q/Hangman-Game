@@ -1,11 +1,11 @@
 body {
-  color: lightblue;
+  color: tan;
 
   /* The image used */
   background-image: url("./../images/stone-wall.jpg");
   /* Center and scale the image nicely */
   background-position: center;
-  background-repeat: repeat-y;
+  background-repeat: round;
   background-size: cover;
 
   /* google font */
@@ -16,5 +16,7 @@ body {
   height: 100%; 
 }
 .container {
+  max-width: 560px;
   padding: 10px;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
 }

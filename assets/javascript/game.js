@@ -20,9 +20,9 @@ var game = {
   alphabet: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
   bones: ["cranium", "mandible", "maxilla", "clavicle", "scapula", "humerus", "radius", "ulna", "carpals", "metacarpals", "phalanges", "sternum", "ribs", "cervical", "thoracic", "lumbar", "sacrum", "coccyx", "ilium", "pubis", "ischium", "femur", "tibia", "fibula", "talus", "calcaneus", "tarsals", "metatarsals", "phalanges"],
   correctLetterCount: 0,
-  defaultGuesses: 7,
+  defaultGuesses: 6,
   gameState: "start",
-  guessesRemaining: 7,
+  guessesRemaining: 6,
   keyPressed: '',
   lettersGuessed: [],
   losses: 0,
@@ -35,6 +35,9 @@ var game = {
     // if keyPressed not in wordToGuesss and not in lettersGuessed then decrease guesses remaining
     if (this.wordToGuess.indexOf(this.keyPressed) < 0 && this.lettersGuessed.indexOf(this.keyPressed) < 0) {
       this.guessesRemaining--;
+      if (this.guessesRemaining == 1) {
+        ghost.play();
+      }
       skeletonId.src = "./assets/images/human-skeleton-" + this.guessesRemaining + ".gif";
     }
     // check to see if the letter was already guessed
@@ -55,7 +58,7 @@ var game = {
       this.reset();
     }
     guessesRemainingId.textContent = this.guessesRemaining;
-    this.showStats();
+    // this.showStats();
   },
   displayWord: function () {
     this.wordToDisplay = "";
@@ -94,7 +97,7 @@ var game = {
     } else {
       // Lost
       this.losses++;
-      messageId.textContent = "Sorry, better luck  next time!";
+      messageId.textContent = "Sorry, better luck  next time! Answer: " + this.wordToGuess;
       if (this.lettersGuessed.length % 2 == 0) {
         wickedWitch.play();
       } else {
@@ -121,15 +124,16 @@ var game = {
   },
   start: function () {
     doorOpening.play();
-    doorOpening.onended = function(){
-      ghost.play();
-    };
     
     this.gameState = 'playing';
     this.getRandomWord();
-    console.log(game.wordToGuess);
+    // console.log(game.wordToGuess);
     this.displayWord();
+    this.lettersGuessed = [];
+    this.displayLettersGuessed();
     messageId.textContent = "Break a Leg!";
+    pressId.textContent = "";
+    skeletonId.src = "./assets/images/human-skeleton-7.gif";
   },
   turn: function() {
     this.addToGuessed();
@@ -142,9 +146,11 @@ var game = {
 // Method Calls
 document.onkeyup = function (event) {
   game.keyPressed = event.key.toLowerCase();
-  console.log(game.keyPressed);
-  // Check to see if the key pressed is a letter
-  if (game.isLetter()) {
+  if (game.gameState == "start") {
+    game.start();
+  } else if (game.isLetter()) {
+    // console.log(game.keyPressed);
+    // Check to see if the key pressed is a letter
     switch (game.gameState) {
       case "start":
         game.start();
