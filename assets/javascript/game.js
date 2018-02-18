@@ -6,6 +6,13 @@ var winsId = document.getElementById("wins");
 var lossesId = document.getElementById("losses");
 var pressId = document.getElementById("press");
 var guessesRemainingId = document.getElementById("remaining");
+var skeletonId = document.getElementById("skeleton");
+
+var doorOpening = new Audio("./assets/sounds/door_creak_closing.wav"); // buffers automatically when created
+var ghost = new Audio("./assets/sounds/ghost01.wav");
+var wickedWitch = new Audio("./assets/sounds/wickedwitchlaugh.wav");
+var boo = new Audio("./assets/sounds/sfxboo.wav");
+var happy = new Audio("./assets/sounds/happykids.wav");
 
 // Object Definitions
 var game = {
@@ -28,6 +35,7 @@ var game = {
     // if keyPressed not in wordToGuesss and not in lettersGuessed then decrease guesses remaining
     if (this.wordToGuess.indexOf(this.keyPressed) < 0 && this.lettersGuessed.indexOf(this.keyPressed) < 0) {
       this.guessesRemaining--;
+      skeletonId.src = "./assets/images/human-skeleton-" + this.guessesRemaining + ".gif";
     }
     // check to see if the letter was already guessed
     if (this.lettersGuessed.indexOf(this.keyPressed) == -1) {
@@ -78,16 +86,22 @@ var game = {
   },
   reset: function () {
     this.guessesRemaining = this.defaultGuesses;
-    this.lettersGuessed = [];
     if (this.gameState == "won") {
       // Won
       this.wins++;
       messageId.textContent = "It's a bone you lucky dog!";
+      happy.play();
     } else {
       // Lost
       this.losses++;
       messageId.textContent = "Sorry, better luck  next time!";
+      if (this.lettersGuessed.length % 2 == 0) {
+        wickedWitch.play();
+      } else {
+        boo.play();
+      }
     }
+    this.lettersGuessed = [];
     pressId.textContent = "Press any key to play again";
     winsId.textContent = this.wins;
     lossesId.textContent = this.losses;
@@ -106,6 +120,11 @@ var game = {
     console.log("wordToGuess " + this.wordToGuess);
   },
   start: function () {
+    doorOpening.play();
+    doorOpening.onended = function(){
+      ghost.play();
+    };
+    
     this.gameState = 'playing';
     this.getRandomWord();
     console.log(game.wordToGuess);

@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Bag O'Bones</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
-  <div class="container">
-    <h1 id="message">Press any key to get started!</h1>
-    <h4 id="press"></h4>
-    <div id="gameStats">
-      <div>
-        Wins: <span id="wins">0</span>
-        Losses: <span id="losses">0</span>
-        Guesses Remaining: <span id="remaining">7</span>        
-      </div>
-      <div>
-        <span id="word"></span>
-      </div>
-      <div>
-        <span id="letters"></span>
+  <div class="container row ">
+    <div class="offset-1 col-5">
+      <h1 id="message">Press any key to get started!</h1>
+      <h4 id="press"></h4>
+      <div id="gameStats">
+        <div>
+          Wins:
+          <span id="wins">0</span>
+          Losses:
+          <span id="losses">0</span>
+          Guesses Remaining:
+          <span id="remaining">7</span>
+        </div>
+        <div>
+          <span id="word"></span>
+        </div>
+        <div>
+          <span id="letters"></span>
+        </div>
       </div>
     </div>
+
+    <div class="offset-1 col-5 ">
+      <img id="skeleton" src="./assets/images/human-skeleton-7.gif" alt="don't lose my bones!">
+    </div>
+
   </div>
   <script src="./assets/javascript/game.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
+
 </html>
 
 <!-- INSTRUCTIONS
@@ -45,4 +60,3 @@
 6. Don't forget to place your global variables and functions above your object.
    * Remember: global variables, then objects, then calls.
 7. Definitely talk with a TA or your instructor if you get tripped up during this challenge.
-
