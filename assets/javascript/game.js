@@ -8,6 +8,7 @@ var game = {
   ],
   bones: ["cranium", "mandible", "maxilla", "clavicle", "scapula", "humerus", "radius", "ulna", "carpals", "metacarpals", "phalanges", "sternum", "ribs", "cervical", "thoracic", "lumbar", "sacrum", "coccyx", "ilium", "pubis", "ischium", "femur", "tibia", "fibula", "talus", "calcaneus", "tarsals", "metatarsals", "phalanges"],
   defaultGuesses: 7,
+  gameState: "start",
   guessesRemaining: 7,
   keyPressed: '',
   lettersGuessed: [],
@@ -16,18 +17,27 @@ var game = {
   wordToDisplay: "",
   wordToGuess: "",
   // game methods
+  addToGuessed: function() {
+    // check to see if the letter was already guessed
+    if (this.lettersGuessed.indexOf(this.keyPressed) == -1) {
+      // Not guessed yet so add to array
+      this.lettersGuessed.push(this.keyPressed);
+    }
+  },
   displayWord: function() {
-    var lcKey = this.keyPressed.toLowerCase();
     this.wordToDisplay = "";
+    var correctLetterCount = 0;
     for(var i = 0; i < this.wordToGuess.length; i++){
-      console.log("I: " + i + ", is " + this.wordToGuess[i]);
-      if (this.wordToGuess[i].indexOf(lcKey) > -1) {
-        console.log("In Word");
-        this.wordToDisplay += lcKey + " ";
+      if (this.lettersGuessed.indexOf(this.wordToGuess[i]) > -1) {
+        this.wordToDisplay += this.wordToGuess[i] + " ";
+        correctLetterCount++;
       } else {
-        console.log("Not in word");
         this.wordToDisplay += "_ ";        
       }
+    }
+    if (correctLetterCount == this.wordToGuess.length) {
+      this.gameState = 'won';
+      console.log("Winner");
     }
     wordId.textContent = this.wordToDisplay;
   },
@@ -35,7 +45,7 @@ var game = {
     this.wordToGuess = this.bones[Math.floor(Math.random() * this.bones.length)];
   },
   isLetter: function() {
-    return (this.alphabet.indexOf(this.keyPressed.toLowerCase()) > -1)
+    return (this.alphabet.indexOf(this.keyPressed.toLowerCase()) > -1);
   }
 
 
@@ -45,13 +55,12 @@ var game = {
 game.getRandomWord();
 console.log(game.wordToGuess);
 document.onkeyup = function(event) {
-  game.keyPressed = event.key;
+  game.keyPressed = event.key.toLowerCase();
   if (game.isLetter()) {
     game.addToGuessed();
-    console.log(game.keyPressed);
     // Valid letter, continue
     game.displayWord();
   } else {
-    // Not a valid letter
+    // Not a valid letter - do nothing
   }
 };
